@@ -47,5 +47,6 @@ build() {
 }
 
 package() {
-  install -d "$pkgdir/opt/arturo" "$srcdir/arturo-$pkgver/bin"
+  install -d "$pkgdir/opt/arturo" 
+  cp -r "$srcdir/arturo-$pkgver/bin" "$pkgdir/opt/arturo"
 }
