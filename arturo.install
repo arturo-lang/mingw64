@@ -6,6 +6,9 @@ pre_install() {
 post_install() {
   mv /opt/arturo/* ~/.arturo/bin/
 
+  echo "Current Arturo's Home"
+  ls ~/.arturo/bin/
+
   echo "Arturo has been successfully installed!"
   echo ""
 
