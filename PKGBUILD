@@ -61,7 +61,7 @@ package() {
     libgmp-10.dll
     libmpfr-6.dll
     libwinpthread-1.dll
-    sqlite3_64.dll
+    libsqlite3-0.dll
     webview.dll
     WebView2Loader.dll
   )
@@ -71,4 +71,8 @@ package() {
       cp "/mingw64/bin/$dll" "$bindir/"
     fi
   done
+
+  # Rename sqlite3 DLL
+  mv "$bindir/libsqlite3-0.dll" "$bindir/sqlite3_64.dll"
+
 }
