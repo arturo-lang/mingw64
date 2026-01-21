@@ -16,8 +16,9 @@ mingw_arch=('mingw64')
 depends=(
   mingw-w64-x86_64-gmp
   mingw-w64-x86_64-mpfr
-  mingw-w64-x86_64-mpfr
+  mingw-w64-x86_64-gcc-libs
   mingw-w64-x86_64-sqlite3
+  mingw-w64-x86_64-webview
 )
 
 makedepends=(
@@ -53,4 +54,20 @@ build() {
 package() {
   install -d "$pkgdir/opt/arturo" 
   cp -r "$srcdir/arturo-$pkgver/bin" "$pkgdir/opt/arturo"
+
+  # Bundle runtime DLLs so arturo.exe works without relying on system PATH
+  local bindir="$pkgdir/opt/arturo/bin"
+  local dlls=(
+    libgcc_s_seh-1.dll
+    libgmp-10.dll
+    libmpfr-6.dll
+    libwinpthread-1.dll
+    sqlite3_64.dll
+    webview.dll
+    WebView2Loader.dll
+  )
+
+  for dll in "${dlls[@]}"; do
+    cp "/mingw64/bin/$dll" "$bindir/"
+  done
 }
