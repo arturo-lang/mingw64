@@ -43,16 +43,20 @@ prepare() {
 
   # Build Nim compiler from source
   git clone https://github.com/nim-lang/Nim "$srcdir/Nim"
-  cd "$srcdir/Nim"
-  git checkout v2.2.6
-  cmd //C build_all.bat
 
 }
 
 build() {
-  cd "$srcdir/arturo-$pkgver"
+
+  # Build Nim compiler
+  cd "$srcdir/Nim"
+  git checkout v2.2.6
+  cmd //C build_all.bat
+
   # Using dev flag to build webview DLLs
+  cd "$srcdir/arturo-$pkgver"
   ../Nim/bin/nim build.nims -l --dev
+
 }
 
 package() {
