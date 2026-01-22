@@ -25,6 +25,7 @@ makedepends=(
   git
   zip
   unzip
+  gcc
 )
 
 source=("https://github.com/arturo-lang/arturo/archive/refs/tags/v${pkgver}.zip")
