@@ -18,6 +18,7 @@ depends=(
   mingw-w64-x86_64-mpfr
   mingw-w64-x86_64-gcc-libs
   mingw-w64-x86_64-sqlite3
+  mingw-w64-x86_64-webview2-loader
 )
 
 makedepends=(
