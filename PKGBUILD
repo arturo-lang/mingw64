@@ -18,7 +18,6 @@ depends=(
   mingw-w64-x86_64-mpfr
   mingw-w64-x86_64-gcc-libs
   mingw-w64-x86_64-sqlite3
-  mingw-w64-x86_64-webview2-loader
 )
 
 makedepends=(
@@ -40,10 +39,17 @@ options=(
 )
 
 prepare() {
+
+  # Build Nim compiler from source
   git clone https://github.com/nim-lang/Nim "$srcdir/Nim"
   cd "$srcdir/Nim"
   git checkout v2.2.6
   cmd //C build_all.bat
+
+  # Build webview DLLs
+  cd "$srcdir/arturo-$pkgver/src/extras/webview/deps/dlls/x64/"
+  cmd //C "build-new.bat" "$bindir/"
+
 }
 
 build() {
@@ -63,8 +69,6 @@ package() {
     libmpfr-6.dll
     libwinpthread-1.dll
     libsqlite3-0.dll
-    webview.dll
-    WebView2Loader.dll
   )
 
   for dll in "${dlls[@]}"; do
@@ -75,5 +79,7 @@ package() {
 
   # Rename sqlite3 DLL
   mv "$bindir/libsqlite3-0.dll" "$bindir/sqlite3_64.dll"
+  cp "$srcdir/arturo-$pkgver/src/extras/webview/deps/dlls/x64/webview.dll" "$bindir/"
+  cp "$srcdir/arturo-$pkgver/src/extras/webview/deps/dlls/x64/WebView2Loader.dll" "$bindir/"
 
 }
