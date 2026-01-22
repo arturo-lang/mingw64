@@ -1,6 +1,7 @@
 
 pre_install() {
   mkdir -p ~/.arturo/bin/
+  mkdir -p ~/.arturo/packages/bin/
 }
 
 post_install() {
@@ -10,9 +11,10 @@ post_install() {
   ls ~/.arturo/bin/
 
   echo "Arturo has been successfully installed!"
+  echo "Added ~/.arturo/bin/ and ~/.arturo/packages/bin to your PATH"
   echo ""
 
-  ARTURO_PATH='export PATH="$HOME/.arturo/bin:$PATH"'
+  ARTURO_PATH='export PATH="$HOME/.arturo/bin:$HOME/.arturo/bin:$PATH"'
 
   # bash / sh / dash
   for f in "$HOME/.bashrc" "$HOME/.profile"; do
@@ -47,22 +49,26 @@ post_remove() {
 
   # Arturo's PATH
   ARTURO_REGEX='\.arturo/bin'
+  PACKAGES_REGEX='\.arturo/packages/bin'
 
   # Unregister from POSIX shells: bash / sh / dash
   for f in "$HOME/.bashrc" "$HOME/.profile"; do
     if [ -f "$f" ]; then
       sed -i "/$ARTURO_REGEX/d" "$f"
+      sed -i "/$PACKAGES_REGEX/d" "$f"
     fi
   done
 
   # Unregister from zsh
   if [ -f "$HOME/.zshrc" ]; then
     sed -i "/$ARTURO_REGEX/d" "$HOME/.zshrc"
+    sed -i "/$PACKAGES_REGEX/d" "$HOME/.zshrc"
   fi
 
   # Unregister from fish
   if command -v fish >/dev/null 2>&1; then
     fish -c 'set -U fish_user_paths (string match -v "$HOME/.arturo/bin" $fish_user_paths)'
+    fish -c 'set -U fish_user_paths (string match -v "$HOME/.arturo/packages/bin" $fish_user_paths)'
   fi
 
   echo "Arturo has been removed."
