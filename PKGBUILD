@@ -1,4 +1,14 @@
-# Maintainer: https://github.com/arturo-lang
+#-----------------------------------------------------------------------------#
+#                                                                             #
+# Maintainers: Arturo Programming Language <https://github.com/arturo-lang>   #
+#                                                                             #
+# We keep a reference repository for this package at                          #
+# https://github.com/arturo-lang/mingw64.                                     #
+#                                                                             #
+# In that repository, we build the package via CI to make sure everything     #
+# is working before submiting a new update here.                              #
+#                                                                             #
+#-----------------------------------------------------------------------------#
 
 pkgname=arturo
 pkgver=0.10.0
@@ -18,15 +28,13 @@ depends=(
   mingw-w64-x86_64-mpfr
   mingw-w64-x86_64-gcc-libs
   mingw-w64-x86_64-sqlite3
-  mingw-w64-x86_64-nim
 )
 
 makedepends=(
   base-devel
-  gcc
   git
-  unzip
   zip
+  unzip
 )
 
 source=("https://github.com/arturo-lang/arturo/archive/refs/tags/v${pkgver}.zip")
@@ -44,20 +52,16 @@ prepare() {
 
   # Build Nim compiler from source
   git clone https://github.com/nim-lang/Nim "$srcdir/Nim"
-
-}
-
-build() {
-
-  # Build Nim compiler
   cd "$srcdir/Nim"
   git checkout v2.2.6
   cmd //C build_all.bat
 
-  # Using dev flag to build webview DLLs
-  cd "$srcdir/arturo-$pkgver"
-  ../Nim/bin/nim build.nims -l --dev
+}
 
+build() {
+  cd "$srcdir/arturo-$pkgver"
+  # Using dev flag to build webview DLLs
+  ../Nim/bin/nim build.nims -l --dev
 }
 
 package() {
