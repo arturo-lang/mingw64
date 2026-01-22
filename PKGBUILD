@@ -46,15 +46,12 @@ prepare() {
   git checkout v2.2.6
   cmd //C build_all.bat
 
-  # Build webview DLLs
-  cd "$srcdir/arturo-$pkgver/src/extras/webview/deps/dlls/x64/"
-  cmd //C "build-new.bat" "$bindir/"
-
 }
 
 build() {
   cd "$srcdir/arturo-$pkgver"
-  ../Nim/bin/nim build.nims -l
+  # Using dev flag to build webview DLLs
+  ../Nim/bin/nim build.nims -l --dev
 }
 
 package() {
