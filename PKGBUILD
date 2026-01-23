@@ -35,6 +35,22 @@ makedepends=(
   git
   zip
   unzip
+
+  # Since I can't use toolchain group,
+  # I decided to add the packages manually.
+  mingw-w64-x86_64-binutils
+  mingw-w64-x86_64-crt
+  mingw-w64-x86_64-gcc
+  mingw-w64-x86_64-gdb
+  mingw-w64-x86_64-gdb-multiarch
+  mingw-w64-x86_64-headers
+  mingw-w64-x86_64-libmangle
+  mingw-w64-x86_64-libwinpthread
+  mingw-w64-x86_64-winpthreads
+  mingw-w64-x86_64-make
+  mingw-w64-x86_64-pkgconf
+  mingw-w64-x86_64-tools
+  mingw-w64-x86_64-winstorecompat
 )
 
 source=("https://github.com/arturo-lang/arturo/archive/refs/tags/v${pkgver}.zip")
