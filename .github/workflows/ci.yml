@@ -17,6 +17,8 @@ jobs:
         with:
           msystem: MINGW64
           update: true
+          install: >-
+            git python base-devel
 
       - name: Build and install package
         shell: msys2 {0}
