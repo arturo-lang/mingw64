@@ -45,7 +45,7 @@ There is an open PR [arturo: add version 0.10.0 - Arizona Bark (new package) #27
 This means that in the future, it'll be possible to install pre-compiled binaries via:
 
 ```sh
-$ pacman -S mingw-w64-x86_64-arturo
+$ pacman -S mingw-w64-arturo
 ```
 
 **Compiling from source**
@@ -61,7 +61,7 @@ This will:
 - Install dependencies from MSYS2's repository.
 - Compile Nim 2.2.6 from source for build-only.
 - Compile Arturo 0.10.0 (Arizona Bark) from source along with its dependencies.
-- Install the `mingw-w64-x86_64-arturo` package system-wide.
+- Install the `mingw-w64-arturo` package system-wide.
 
 ## What you need to know
 
@@ -87,7 +87,7 @@ $ makepkg -si
 ### Remove
 
 ```sh
-$ pacman -R mingw-w64-x86_64-arturo
+$ pacman -R mingw-w64-arturo
 ```
 
 
