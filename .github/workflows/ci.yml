@@ -26,7 +26,6 @@ jobs:
           set -euxo pipefail
           dos2unix PKGBUILD
           dos2unix arturo.install
-          dos2unix 001-no-static-linking.patch
           MINGW_ARCH=ucrt64 makepkg-mingw -sif --noconfirm --noprogressbar --skippgpcheck
 
       - name: Debug and verify installation
