@@ -4,8 +4,10 @@
 
 <p align="center">
 <i>
-  A Mingw64 package for the <a href="https://arturo-lang.io">Arturo programming language</a> on the
-  <a href="https://www.msys2.org">MSYS2</a> platform.
+  Bringing the
+  <a href="https://arturo-lang.io">Arturo programming language</a>
+  to the
+  <a href="https://www.msys2.org">MSYS2</a> world — expressive, portable, and beautifully simple.
 </i>
 <br>
 <br><br>
