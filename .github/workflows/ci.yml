@@ -91,13 +91,6 @@ jobs:
           # echo ""
           
           echo "============================================"
-          echo "PACMAN PACKAGE INFO"
-          echo "============================================"
-          echo "Installed files from arturo package:"
-          pacman -Ql arturo
-          echo ""
-          
-          echo "============================================"
           echo "SEARCH FOR ARTURO.EXE ANYWHERE"
           echo "============================================"
           echo "Looking in common locations:"
