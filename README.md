@@ -38,11 +38,7 @@
 
 ## How to use
 
-**Comming soon**
-
-There is an open PR [arturo: add version 0.10.0 - Arizona Bark (new package) #27514](https://github.com/msys2/MINGW-packages/pull/27514) to add Arturo to the MINGW package repository.
-
-This means that in the future, it'll be possible to install pre-compiled binaries via:
+**Install pre-compiled**
 
 ```sh
 $ pacman -S mingw-w64-arturo
