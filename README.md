@@ -64,6 +64,9 @@ in order to add `~/.arturo/bin` and `~/.arturo/packages/bin` into your `$PATH`.
 Don't worry too much, we also have made scripts to uninstall Arturo
 and to clean up your `$PATH` from those entries. :wink:
 
+- Package: https://packages.msys2.org/base/mingw-w64-arturo
+- Source code: https://github.com/msys2/MINGW-packages/tree/master/mingw-w64-arturo
+
 
 ## Update and Remove
 
