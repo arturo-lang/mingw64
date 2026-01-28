@@ -108,45 +108,20 @@ jobs:
           echo ""
           
           echo "============================================"
-          echo "ATTEMPT TO RUN ARTURO WITH DIFFERENT PATHS"
+          echo "CHECK DLL DEPENDENCIES"
           echo "============================================"
-          
-          echo "Attempt 1: ~/.arturo/bin/arturo.exe -v"
-          ~/.arturo/bin/arturo.exe -v 2>&1 || echo "EXIT CODE: $?"
-          echo ""
-          
-          echo "Attempt 2: \$HOME/.arturo/bin/arturo.exe -v"
-          $HOME/.arturo/bin/arturo.exe -v 2>&1 || echo "EXIT CODE: $?"
-          echo ""
-          
-          echo "Attempt 3: Full path with HOME variable"
-          "${HOME}/.arturo/bin/arturo.exe" -v 2>&1 || echo "EXIT CODE: $?"
-          echo ""
-          
-          echo "Attempt 4: If found by which"
-          if which arturo.exe >/dev/null 2>&1; then
-            arturo.exe -v 2>&1 || echo "EXIT CODE: $?"
-          else
-            echo "Skipped - not in PATH"
+          if [ -f /ucrt64/bin/arturo.exe ]; then
+            echo "DLL dependencies:"
+            ldd /ucrt64/bin/arturo.exe 2>&1 || echo "ldd failed"
           fi
           echo ""
-          
-          # echo "============================================"
-          # echo "CHECK DLL DEPENDENCIES"
-          # echo "============================================"
-          # if [ -f ~/.arturo/bin/arturo.exe ]; then
-          #   echo "DLL dependencies:"
-          #   ldd ~/.arturo/bin/arturo.exe 2>&1 || echo "ldd failed"
-          # fi
-          # echo ""
           
           echo "============================================"
           echo "FINAL VERIFICATION ATTEMPT"
           echo "============================================"
-          if [ -f ~/.arturo/bin/arturo.exe ] && [ -x ~/.arturo/bin/arturo.exe ]; then
+          if [ -f /ucrt64/bin/arturo.exe ] && [ -x /ucrt64/bin/arturo.exe ]; then
             echo "File exists and is executable, attempting to run..."
             arturo.exe -v
-            # ~/.arturo/bin/arturo.exe -v
             echo "SUCCESS!"
           else
             echo "FAILED: File does not exist or is not executable"
