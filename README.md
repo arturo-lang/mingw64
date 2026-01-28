@@ -34,7 +34,6 @@
 ## Prerequisites
 
 - [MSYS2](https://www.msys2.org/) installed and updated.
-- MSYS2 `mingw-w64-x86_64-toolchain` package installed.
 
 ## How to use
 
