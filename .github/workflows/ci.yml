@@ -73,23 +73,23 @@ jobs:
           fi
           echo ""
           
-          echo "============================================"
-          echo "CHECK ARTURO.EXE FILE"
-          echo "============================================"
-          if [ -f ~/.arturo/bin/arturo.exe ]; then
-            echo "~/.arturo/bin/arturo.exe EXISTS"
-            echo "File info:"
-            ls -lh ~/.arturo/bin/arturo.exe
-            echo "File type:"
-            file ~/.arturo/bin/arturo.exe
-            echo "Permissions:"
-            stat -c "%a %n" ~/.arturo/bin/arturo.exe
-            echo "Executable check:"
-            test -x ~/.arturo/bin/arturo.exe && echo "File IS executable" || echo "File is NOT executable"
-          else
-            echo "~/.arturo/bin/arturo.exe DOES NOT EXIST"
-          fi
-          echo ""
+          # echo "============================================"
+          # echo "CHECK ARTURO.EXE FILE"
+          # echo "============================================"
+          # if [ -f ~/.arturo/bin/arturo.exe ]; then
+          #   echo "~/.arturo/bin/arturo.exe EXISTS"
+          #   echo "File info:"
+          #   ls -lh ~/.arturo/bin/arturo.exe
+          #   echo "File type:"
+          #   file ~/.arturo/bin/arturo.exe
+          #   echo "Permissions:"
+          #   stat -c "%a %n" ~/.arturo/bin/arturo.exe
+          #   echo "Executable check:"
+          #   test -x ~/.arturo/bin/arturo.exe && echo "File IS executable" || echo "File is NOT executable"
+          # else
+          #   echo "~/.arturo/bin/arturo.exe DOES NOT EXIST"
+          # fi
+          # echo ""
           
           echo "============================================"
           echo "PACMAN PACKAGE INFO"
@@ -105,6 +105,7 @@ jobs:
           find /opt -name "arturo.exe" 2>/dev/null || echo "Not found in /opt"
           find /usr -name "arturo.exe" 2>/dev/null || echo "Not found in /usr"
           find /mingw64 -name "arturo.exe" 2>/dev/null || echo "Not found in /mingw64"
+          find /ucrt64 -name "arturo.exe" 2>/dev/null || echo "Not found in /mingw64"
           find "$HOME" -name "arturo.exe" 2>/dev/null || echo "Not found in HOME"
           echo ""
           
@@ -138,21 +139,22 @@ jobs:
           fi
           echo ""
           
-          echo "============================================"
-          echo "CHECK DLL DEPENDENCIES"
-          echo "============================================"
-          if [ -f ~/.arturo/bin/arturo.exe ]; then
-            echo "DLL dependencies:"
-            ldd ~/.arturo/bin/arturo.exe 2>&1 || echo "ldd failed"
-          fi
-          echo ""
+          # echo "============================================"
+          # echo "CHECK DLL DEPENDENCIES"
+          # echo "============================================"
+          # if [ -f ~/.arturo/bin/arturo.exe ]; then
+          #   echo "DLL dependencies:"
+          #   ldd ~/.arturo/bin/arturo.exe 2>&1 || echo "ldd failed"
+          # fi
+          # echo ""
           
           echo "============================================"
           echo "FINAL VERIFICATION ATTEMPT"
           echo "============================================"
           if [ -f ~/.arturo/bin/arturo.exe ] && [ -x ~/.arturo/bin/arturo.exe ]; then
             echo "File exists and is executable, attempting to run..."
-            ~/.arturo/bin/arturo.exe -v
+            arturo.exe -v
+            # ~/.arturo/bin/arturo.exe -v
             echo "SUCCESS!"
           else
             echo "FAILED: File does not exist or is not executable"
