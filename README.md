@@ -37,8 +37,6 @@
 
 ## How to use
 
-**Install pre-compiled**
-
 ```sh
 $ pacman -S mingw-w64-arturo
 ```
