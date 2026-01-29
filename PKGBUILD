@@ -26,6 +26,7 @@ makedepends=(
   "${MINGW_PACKAGE_PREFIX}-nim"
   "${MINGW_PACKAGE_PREFIX}-pkgconf"
 )
+
 source=(
   "https://github.com/arturo-lang/arturo/archive/v${pkgver}/${_realname}-${pkgver}.tar.gz"
   "001-no-static-linking.patch"
@@ -35,7 +36,7 @@ source=(
 sha256sums=(
   '408646496895753608ad9dc6ddfbfa25921c03c4c7356f2832a9a63f4a7dc351'
   '51af1d69911ff49af86e97f578aa4f1a651f04c359623f71c07b8387f70ed515'
-  '08d2813966d92e0865d74287099ba5c95d3e0eb7726671533eb81483d7c31721'
+  'e9a0be17dc1a80ba880a38814cb18bf55eac20ad8926ecfd3305521bfd0ac7f7'
 )
 
 prepare() {
