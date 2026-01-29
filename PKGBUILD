@@ -19,12 +19,12 @@ depends=(
   "${MINGW_PACKAGE_PREFIX}-openssl"
   "${MINGW_PACKAGE_PREFIX}-sqlite3"
   "${MINGW_PACKAGE_PREFIX}-webview"
+  "${MINGW_PACKAGE_PREFIX}-pcre"
 )
 makedepends=(
   "${MINGW_PACKAGE_PREFIX}-cc"
   "${MINGW_PACKAGE_PREFIX}-nim"
   "${MINGW_PACKAGE_PREFIX}-pkgconf"
-  "${MINGW_PACKAGE_PREFIX}-pcre"
 )
 source=(
   "https://github.com/arturo-lang/arturo/archive/v${pkgver}/${_realname}-${pkgver}.tar.gz"
