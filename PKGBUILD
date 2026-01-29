@@ -41,6 +41,7 @@ sha256sums=(
 prepare() {
   cd ${_realname}-${pkgver}
   patch -p1 -i "${srcdir}"/001-no-static-linking.patch
+  patch -p1 -i "${srcdir}"/002-fix-sqlite3-dependency-name.patch
 }
 
 build() {
