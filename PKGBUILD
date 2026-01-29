@@ -4,7 +4,7 @@ _realname=arturo
 pkgbase=mingw-w64-${_realname}
 pkgname=${MINGW_PACKAGE_PREFIX}-${_realname}
 pkgver=0.10.0
-pkgrel=1
+pkgrel=3
 pkgdesc="Simple, expressive & portable programming language for efficient scripting. (mingw-w64)"
 arch=('any')
 mingw_arch=('ucrt64')
@@ -17,9 +17,9 @@ depends=(
   "${MINGW_PACKAGE_PREFIX}-libwinpthread"
   "${MINGW_PACKAGE_PREFIX}-mpfr"
   "${MINGW_PACKAGE_PREFIX}-openssl"
+  "${MINGW_PACKAGE_PREFIX}-pcre"
   "${MINGW_PACKAGE_PREFIX}-sqlite3"
   "${MINGW_PACKAGE_PREFIX}-webview"
-  "${MINGW_PACKAGE_PREFIX}-pcre"
 )
 makedepends=(
   "${MINGW_PACKAGE_PREFIX}-cc"
