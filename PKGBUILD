@@ -1,108 +1,67 @@
-#-----------------------------------------------------------------------------#
-#                                                                             #
-# Maintainers: Arturo Programming Language <https://github.com/arturo-lang>   #
-#                                                                             #
-# We keep a reference repository for this package at                          #
-# https://github.com/arturo-lang/mingw64.                                     #
-#                                                                             #
-# In that repository, we build the package via CI to make sure everything     #
-# is working before submiting a new update here.                              #
-#                                                                             #
-#-----------------------------------------------------------------------------#
+# Maintainer: Arturo Programming Language <https://github.com/arturo-lang>
 
-pkgname=arturo
+_realname=arturo
+pkgbase=mingw-w64-${_realname}
+pkgname=${MINGW_PACKAGE_PREFIX}-${_realname}
 pkgver=0.10.0
-pkgrel=1
-pkgdesc="Simple, expressive & portable programming language for efficient scripting."
-arch=('x86_64')
+pkgrel=3
+pkgdesc="Simple, expressive & portable programming language for efficient scripting. (mingw-w64)"
+arch=('any')
+mingw_arch=('ucrt64')
 url="https://arturo-lang.io/"
-license=("spdx:MIT")
-purl=("pkg:github/arturo-lang/arturo@v${pkgver}")
-
-
 msys2_repository_url="https://github.com/arturo-lang/arturo"
-mingw_arch=('mingw64')
-
+license=("spdx:MIT")
 depends=(
-  mingw-w64-x86_64-gmp
-  mingw-w64-x86_64-mpfr
-  mingw-w64-x86_64-gcc-libs
-  mingw-w64-x86_64-sqlite3
+  "${MINGW_PACKAGE_PREFIX}-cc-libs"
+  "${MINGW_PACKAGE_PREFIX}-gmp"
+  "${MINGW_PACKAGE_PREFIX}-libwinpthread"
+  "${MINGW_PACKAGE_PREFIX}-mpfr"
+  "${MINGW_PACKAGE_PREFIX}-openssl"
+  "${MINGW_PACKAGE_PREFIX}-pcre"
+  "${MINGW_PACKAGE_PREFIX}-sqlite3"
+  "${MINGW_PACKAGE_PREFIX}-webview"
 )
-
 makedepends=(
-  base-devel
-  git
-  zip
-  unzip
-
-  # Since I can't use mingw-w64-x86_64-toolchain group,
-  # I decided to add the packages manually.
-  mingw-w64-x86_64-binutils
-  mingw-w64-x86_64-crt
-  mingw-w64-x86_64-gcc
-  mingw-w64-x86_64-gdb
-  mingw-w64-x86_64-gdb-multiarch
-  mingw-w64-x86_64-headers
-  mingw-w64-x86_64-libmangle
-  mingw-w64-x86_64-libwinpthread
-  mingw-w64-x86_64-winpthreads
-  mingw-w64-x86_64-make
-  mingw-w64-x86_64-pkgconf
-  mingw-w64-x86_64-tools
-  mingw-w64-x86_64-winstorecompat
+  "${MINGW_PACKAGE_PREFIX}-cc"
+  "${MINGW_PACKAGE_PREFIX}-nim"
+  "${MINGW_PACKAGE_PREFIX}-pkgconf"
 )
 
-source=("https://github.com/arturo-lang/arturo/archive/refs/tags/v${pkgver}.zip")
-sha256sums=('D7317D3DD0DA4E72F60F08242D332D2C807A3E8CBF790B6B2FD20E81ADE008FC')
+source=(
+  "https://github.com/arturo-lang/arturo/archive/v${pkgver}/${_realname}-${pkgver}.tar.gz"
+  "001-no-static-linking.patch"
+  "002-fix-sqlite3-dependency-name.patch"
+)
 
-install=arturo.install
-
-options=(
-  !staticlibs
-  !libtool
-  !strip
+sha256sums=(
+  '408646496895753608ad9dc6ddfbfa25921c03c4c7356f2832a9a63f4a7dc351'
+  '51af1d69911ff49af86e97f578aa4f1a651f04c359623f71c07b8387f70ed515'
+  '3c82b594998c4eed8614bdb7b45bb2eb3ee07a92b6e38d4695b36b59298ebd04'
 )
 
 prepare() {
-
-  # Build Nim compiler from source
-  git clone https://github.com/nim-lang/Nim "$srcdir/Nim"
-  cd "$srcdir/Nim"
-  git checkout v2.2.6
-  sh build_all.sh
-
+  cd ${_realname}-${pkgver}
+  patch -p1 -i "${srcdir}"/001-no-static-linking.patch
+  patch -p1 -i "${srcdir}"/002-fix-sqlite3-dependency-name.patch
 }
 
 build() {
-  cd "$srcdir/arturo-$pkgver"
+  declare -a extra_config
+  if check_option "debug" "n"; then
+    extra_config+=("--release")
+  else
+    extra_config+=("--debug")
+  fi
+
+  cd "${srcdir}/${_realname}-${pkgver}"
   # Using dev flag to build webview DLLs
-  ../Nim/bin/nim build.nims -l --dev
+  nim build.nims "${extra_config[@]}" -l --dev
 }
 
 package() {
-  install -d "$pkgdir/opt/arturo" 
-  cp -r "$srcdir/arturo-$pkgver/bin" "$pkgdir/opt/arturo"
+  install -d "${pkgdir}"${MINGW_PREFIX}/bin
+  cp "${srcdir}"/${_realname}-${pkgver}/bin/*.exe "${pkgdir}"${MINGW_PREFIX}/bin/
 
-  # Bundle runtime DLLs so arturo.exe works without relying on system PATH
-  local bindir="$pkgdir/opt/arturo/bin"
-  local dlls=(
-    libgcc_s_seh-1.dll
-    libgmp-10.dll
-    libmpfr-6.dll
-    libwinpthread-1.dll
-    libsqlite3-0.dll
-  )
-
-  for dll in "${dlls[@]}"; do
-    if [ -f "/mingw64/bin/$dll" ]; then
-      cp "/mingw64/bin/$dll" "$bindir/"
-    fi
-  done
-
-  # Rename sqlite3 DLL
-  mv "$bindir/libsqlite3-0.dll" "$bindir/sqlite3_64.dll"
-  cp "$srcdir/arturo-$pkgver/src/extras/webview/deps/dlls/x64/webview.dll" "$bindir/"
-  cp "$srcdir/arturo-$pkgver/src/extras/webview/deps/dlls/x64/WebView2Loader.dll" "$bindir/"
-
+  install -Dm644 "${srcdir}"/${_realname}-${pkgver}/LICENSE \
+    "${pkgdir}"${MINGW_PREFIX}/share/licenses/${_realname}/LICENSE
 }
