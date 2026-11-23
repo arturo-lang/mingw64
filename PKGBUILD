@@ -16,7 +16,6 @@ depends=(
   "${MINGW_PACKAGE_PREFIX}-gmp"
   "${MINGW_PACKAGE_PREFIX}-libwinpthread"
   "${MINGW_PACKAGE_PREFIX}-mpfr"
-  "${MINGW_PACKAGE_PREFIX}-openssl"
   "${MINGW_PACKAGE_PREFIX}-pcre"
   "${MINGW_PACKAGE_PREFIX}-sqlite3"
   "${MINGW_PACKAGE_PREFIX}-webview"
