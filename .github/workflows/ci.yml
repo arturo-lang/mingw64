@@ -18,7 +18,7 @@ jobs:
           msystem: UCRT64
           update: true
           install: >-
-            git python base-devel
+            git python base-devel dos2unix
 
       - name: Build and install package
         shell: msys2 {0}
